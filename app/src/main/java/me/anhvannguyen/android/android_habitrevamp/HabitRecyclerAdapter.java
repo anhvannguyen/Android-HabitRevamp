@@ -8,7 +8,7 @@ import android.view.ViewGroup;
  * Created by anhvannguyen on 8/26/15.
  */
 public class HabitRecyclerAdapter extends RecyclerView.Adapter<HabitRecyclerAdapter.ViewHolder> {
-    
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(View itemView) {
             super(itemView);
