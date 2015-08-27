@@ -11,6 +11,12 @@ public class NewHabitActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_habit);
+
+        NewHabitFragment fragment = new NewHabitFragment();
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.new_habit_container, fragment)
+                .commit();
     }
 
     @Override
