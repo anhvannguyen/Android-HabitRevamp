@@ -4,6 +4,7 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 /**
@@ -16,9 +17,9 @@ public class HabitContentProvider extends ContentProvider {
     private static final int HABIT = 100;
     private static final int HABIT_WITH_ID = 101;
 
-    private static final int HABIT_DAY = 200;
-    private static final int HABIT_DAY_WITH_ID = 201;
-    private static final int HABIT_DAY_WITH_HABIT_ID = 202;
+    private static final int HABIT_DATE = 200;
+    private static final int HABIT_DATE_WITH_ID = 201;
+    private static final int HABIT_DATE_WITH_HABIT_ID = 202;
 
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -27,9 +28,9 @@ public class HabitContentProvider extends ContentProvider {
         matcher.addURI(authority, HabitContract.PATH_HABIT, HABIT);
         matcher.addURI(authority, HabitContract.PATH_HABIT + "/#", HABIT_WITH_ID);
 
-        matcher.addURI(authority, HabitContract.PATH_HABIT_DAY, HABIT_DAY);
-        matcher.addURI(authority, HabitContract.PATH_HABIT_DAY + "/#", HABIT_DAY_WITH_ID);
-        matcher.addURI(authority, HabitContract.PATH_HABIT + "/#/" + HabitContract.PATH_HABIT_ALL_DAYS, HABIT_DAY_WITH_HABIT_ID);
+        matcher.addURI(authority, HabitContract.PATH_HABIT_DAY, HABIT_DATE);
+        matcher.addURI(authority, HabitContract.PATH_HABIT_DAY + "/#", HABIT_DATE_WITH_ID);
+        matcher.addURI(authority, HabitContract.PATH_HABIT + "/#/" + HabitContract.PATH_HABIT_ALL_DAYS, HABIT_DATE_WITH_HABIT_ID);
 
         return matcher;
     }
@@ -50,11 +51,11 @@ public class HabitContentProvider extends ContentProvider {
                 return HabitContract.HabitEntry.CONTENT_TYPE;
             case HABIT_WITH_ID:
                 return HabitContract.HabitEntry.CONTENT_ITEM_TYPE;
-            case HABIT_DAY:
+            case HABIT_DATE:
                 return HabitContract.HabitDayCompleteEntry.CONTENT_TYPE;
-            case HABIT_DAY_WITH_ID:
+            case HABIT_DATE_WITH_ID:
                 return HabitContract.HabitDayCompleteEntry.CONTENT_ITEM_TYPE;
-            case HABIT_DAY_WITH_HABIT_ID:
+            case HABIT_DATE_WITH_HABIT_ID:
                 return HabitContract.HabitDayCompleteEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -63,7 +64,39 @@ public class HabitContentProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return null;
+        Cursor returnCursor;
+        final int match = sUriMatcher.match(uri);
+        SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+
+        switch (match) {
+            case HABIT:
+                returnCursor = db.query(
+                        HabitContract.HabitEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            case HABIT_DATE:
+                returnCursor = db.query(
+                        HabitContract.HabitDayCompleteEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+        // notify content resolver that there is a change
+        returnCursor.setNotificationUri(getContext().getContentResolver(), uri);
+        return returnCursor;
     }
 
     @Override
