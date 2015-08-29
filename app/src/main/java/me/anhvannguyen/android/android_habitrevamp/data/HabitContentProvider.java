@@ -42,7 +42,23 @@ public class HabitContentProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        return null;
+        // Use the Uri Matcher to determine what kind of URI this is.
+        final int match = sUriMatcher.match(uri);
+
+        switch (match) {
+            case HABIT:
+                return HabitContract.HabitEntry.CONTENT_TYPE;
+            case HABIT_WITH_ID:
+                return HabitContract.HabitEntry.CONTENT_ITEM_TYPE;
+            case HABIT_DAY:
+                return HabitContract.HabitDayCompleteEntry.CONTENT_TYPE;
+            case HABIT_DAY_WITH_ID:
+                return HabitContract.HabitDayCompleteEntry.CONTENT_ITEM_TYPE;
+            case HABIT_DAY_WITH_HABIT_ID:
+                return HabitContract.HabitDayCompleteEntry.CONTENT_TYPE;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
     }
 
     @Override
