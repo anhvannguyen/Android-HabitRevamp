@@ -16,6 +16,7 @@ public class HabitContract {
 
     public static final String PATH_HABIT = "habit";
     public static final String PATH_HABIT_DAY = "habitday";
+    public static final String PATH_HABIT_ALL_DAYS = "alldays";
 
     public static final class HabitEntry implements BaseColumns {
         public static final Uri CONTENT_URI =
