@@ -171,7 +171,7 @@ public class HabitContentProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
-        
+
         getContext().getContentResolver().notifyChange(uri, null);
         return returnUri;
     }
@@ -183,6 +183,58 @@ public class HabitContentProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return 0;
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        int rowsUpdated;
+
+        switch (match) {
+            case HABIT:
+                rowsUpdated = db.update(
+                        HabitContract.HabitEntry.TABLE_NAME,
+                        values,
+                        selection,
+                        selectionArgs
+                );
+                break;
+            case HABIT_WITH_ID:
+                String habitId = HabitContract.HabitEntry.getHabitId(uri);
+                rowsUpdated = db.update(
+                        HabitContract.HabitEntry.TABLE_NAME,
+                        values,
+                        HabitContract.HabitEntry._ID + " = ?",
+                        new String[]{habitId}
+                );
+                break;
+            case DATE:
+                rowsUpdated = db.update(
+                        HabitContract.DayCompleteEntry.TABLE_NAME,
+                        values,
+                        selection,
+                        selectionArgs
+                );
+                break;
+            case DATE_WITH_ID:
+                String habitDayId = HabitContract.DayCompleteEntry.getHabitDateId(uri);
+                rowsUpdated = db.update(
+                        HabitContract.DayCompleteEntry.TABLE_NAME,
+                        values,
+                        HabitContract.DayCompleteEntry._ID + " = ?",
+                        new String[]{habitDayId}
+                );
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+
+        if (rowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsUpdated;
+    }
+
+    @Override
+    public void shutdown() {
+        mOpenHelper.close();
+        super.shutdown();
     }
 }
