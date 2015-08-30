@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -19,6 +22,8 @@ public class NewHabitFragment extends Fragment {
     private Button mStartDateButton;
     private TextView mStartDateTextView;
     private Button mSaveButton;
+
+    private Calendar mStartDate;
 
     public NewHabitFragment() {
         // Required empty public constructor
@@ -31,6 +36,14 @@ public class NewHabitFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_new_habit, container, false);
 
+        // Get the current time in the default time zone with default locale
+        mStartDate = Calendar.getInstance();
+        // Zero out the time
+        mStartDate.set(Calendar.HOUR_OF_DAY, 0);
+        mStartDate.set(Calendar.MINUTE, 0);
+        mStartDate.set(Calendar.SECOND, 0);
+        mStartDate.set(Calendar.MILLISECOND, 0);
+
         mTitleEditText = (EditText) rootView.findViewById(R.id.habit_title_edittext);
 
         mSubtitleEditText = (EditText) rootView.findViewById(R.id.habit_subtitle_edittext);
@@ -39,11 +52,13 @@ public class NewHabitFragment extends Fragment {
         mStartDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
             }
         });
 
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy - hh:mm:ssa zzzz");
         mStartDateTextView = (TextView) rootView.findViewById(R.id.habit_start_date_textview);
+        mStartDateTextView.setText(sdf.format(mStartDate.getTime()));
 
         mSaveButton = (Button) rootView.findViewById(R.id.habit_save_button);
         mSaveButton.setOnClickListener(new View.OnClickListener() {
