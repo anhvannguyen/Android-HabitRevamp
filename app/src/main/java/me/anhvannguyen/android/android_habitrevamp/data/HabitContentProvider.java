@@ -142,7 +142,38 @@ public class HabitContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        return null;
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        Uri returnUri;
+        switch (match) {
+            case HABIT: {
+                long _id = db.insert(
+                        HabitContract.HabitEntry.TABLE_NAME,
+                        null,
+                        values);
+                if (_id > 0)
+                    returnUri = HabitContract.HabitEntry.buildHabitUri(_id);
+                else
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                break;
+            }
+            case DATE: {
+                long _id = db.insert(
+                        HabitContract.DayCompleteEntry.TABLE_NAME,
+                        null,
+                        values);
+                if (_id > 0)
+                    returnUri = HabitContract.DayCompleteEntry.buildHabitDayUri(_id);
+                else
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                break;
+            }
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+        
+        getContext().getContentResolver().notifyChange(uri, null);
+        return returnUri;
     }
 
     @Override
