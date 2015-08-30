@@ -145,6 +145,7 @@ public class HabitContentProvider extends ContentProvider {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         Uri returnUri;
+        
         switch (match) {
             case HABIT: {
                 long _id = db.insert(
@@ -178,7 +179,51 @@ public class HabitContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        int rowsDeleted;
+
+        // this makes delete all rows return the number of rows deleted
+        if ( selection == null ) selection = "1";
+        switch (match) {
+            case HABIT:
+                rowsDeleted = db.delete(
+                        HabitContract.HabitEntry.TABLE_NAME,
+                        selection,
+                        selectionArgs
+                );
+                break;
+            case HABIT_WITH_ID:
+                String habitId = HabitContract.HabitEntry.getHabitId(uri);
+                rowsDeleted = db.delete(
+                        HabitContract.HabitEntry.TABLE_NAME,
+                        HabitContract.HabitEntry._ID,
+                        new String[]{habitId}
+                );
+            case DATE:
+                rowsDeleted = db.delete(
+                        HabitContract.DayCompleteEntry.TABLE_NAME,
+                        selection,
+                        selectionArgs
+                );
+                break;
+            case DATE_WITH_ID:
+                String habitDayId = HabitContract.DayCompleteEntry.getHabitDateId(uri);
+                rowsDeleted = db.delete(
+                        HabitContract.DayCompleteEntry.TABLE_NAME,
+                        HabitContract.DayCompleteEntry._ID + " = ?",
+                        new String[]{habitDayId}
+                );
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+
+        }
+
+        if (rowsDeleted != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsDeleted;
     }
 
     @Override
