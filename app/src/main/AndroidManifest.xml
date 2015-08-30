@@ -24,6 +24,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="me.anhvannguyen.android.android_habitrevamp.MainActivity" />
         </activity>
+        <provider
+            android:authorities="me.anhvannguyen.android.android_habitrevamp"
+            android:name=".data.HabitContentProvider"
+            android:exported="false" />
     </application>
 
 </manifest>
