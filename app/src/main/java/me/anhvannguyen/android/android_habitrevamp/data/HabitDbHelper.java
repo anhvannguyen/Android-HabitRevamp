@@ -20,15 +20,15 @@ public class HabitDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         final String SQL_CREATE_HABIT_TABLE = "CREATE TABLE " + HabitContract.HabitEntry.TABLE_NAME + " (" +
                 HabitContract.HabitEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                HabitContract.HabitEntry.COLUMN_TITLE + " TEXT, " +
+                HabitContract.HabitEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
                 HabitContract.HabitEntry.COLUMN_START_DATE + " INTEGER " +
                 ");";
 
-        final String SQL_CREATE_HABIT_COMPLETED_TABLE = "CREATE TABLE " + HabitContract.HabitDayCompleteEntry.TABLE_NAME + " (" +
-                HabitContract.HabitDayCompleteEntry._ID + " INTEGER PRIMARY KEY, " +
-                HabitContract.HabitDayCompleteEntry.COLUMN_HABIT_ID + " INTEGER, " +
-                HabitContract.HabitDayCompleteEntry.COLUMN_DATE + " INTEGER, " +
-                HabitContract.HabitDayCompleteEntry.COLUMN_COMPLETE + " INTEGER " +
+        final String SQL_CREATE_HABIT_COMPLETED_TABLE = "CREATE TABLE " + HabitContract.DayCompleteEntry.TABLE_NAME + " (" +
+                HabitContract.DayCompleteEntry._ID + " INTEGER PRIMARY KEY, " +
+                HabitContract.DayCompleteEntry.COLUMN_HABIT_ID + " INTEGER NOT NULL, " +
+                HabitContract.DayCompleteEntry.COLUMN_DATE + " INTEGER NOT NULL, " +
+                HabitContract.DayCompleteEntry.COLUMN_COMPLETE + " INTEGER " +
                 ");";
         
         db.execSQL(SQL_CREATE_HABIT_TABLE);

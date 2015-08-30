@@ -28,9 +28,9 @@ public class HabitContentProvider extends ContentProvider {
         matcher.addURI(authority, HabitContract.PATH_HABIT, HABIT);
         matcher.addURI(authority, HabitContract.PATH_HABIT + "/#", HABIT_WITH_ID);
 
-        matcher.addURI(authority, HabitContract.PATH_HABIT_DAY, DATE);
-        matcher.addURI(authority, HabitContract.PATH_HABIT_DAY + "/#", DATE_WITH_ID);
-        matcher.addURI(authority, HabitContract.PATH_HABIT + "/#/" + HabitContract.PATH_HABIT_ALL_DAYS, DATE_WITH_HABIT_ID);
+        matcher.addURI(authority, HabitContract.PATH_DAY, DATE);
+        matcher.addURI(authority, HabitContract.PATH_DAY + "/#", DATE_WITH_ID);
+        matcher.addURI(authority, HabitContract.PATH_HABIT + "/#/" + HabitContract.PATH_ALL_DAYS, DATE_WITH_HABIT_ID);
 
         return matcher;
     }
@@ -52,11 +52,11 @@ public class HabitContentProvider extends ContentProvider {
             case HABIT_WITH_ID:
                 return HabitContract.HabitEntry.CONTENT_ITEM_TYPE;
             case DATE:
-                return HabitContract.HabitDayCompleteEntry.CONTENT_TYPE;
+                return HabitContract.DayCompleteEntry.CONTENT_TYPE;
             case DATE_WITH_ID:
-                return HabitContract.HabitDayCompleteEntry.CONTENT_ITEM_TYPE;
+                return HabitContract.DayCompleteEntry.CONTENT_ITEM_TYPE;
             case DATE_WITH_HABIT_ID:
-                return HabitContract.HabitDayCompleteEntry.CONTENT_TYPE;
+                return HabitContract.DayCompleteEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -96,7 +96,7 @@ public class HabitContentProvider extends ContentProvider {
             }
             case DATE: {
                 returnCursor = db.query(
-                        HabitContract.HabitDayCompleteEntry.TABLE_NAME,
+                        HabitContract.DayCompleteEntry.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -107,11 +107,11 @@ public class HabitContentProvider extends ContentProvider {
                 break;
             }
             case DATE_WITH_ID: {
-                String habitDayId = HabitContract.HabitDayCompleteEntry.getHabitDateId(uri);
+                String habitDayId = HabitContract.DayCompleteEntry.getHabitDateId(uri);
                 returnCursor = db.query(
-                        HabitContract.HabitDayCompleteEntry.TABLE_NAME,
+                        HabitContract.DayCompleteEntry.TABLE_NAME,
                         projection,
-                        HabitContract.HabitDayCompleteEntry._ID + " = ?",
+                        HabitContract.DayCompleteEntry._ID + " = ?",
                         new String[]{habitDayId},
                         null,
                         null,
@@ -122,9 +122,9 @@ public class HabitContentProvider extends ContentProvider {
             case DATE_WITH_HABIT_ID: {
                 String habitId = HabitContract.HabitEntry.getHabitId(uri);
                 returnCursor = db.query(
-                        HabitContract.HabitDayCompleteEntry.TABLE_NAME,
+                        HabitContract.DayCompleteEntry.TABLE_NAME,
                         projection,
-                        HabitContract.HabitDayCompleteEntry.COLUMN_HABIT_ID + " = ?",
+                        HabitContract.DayCompleteEntry.COLUMN_HABIT_ID + " = ?",
                         new String[]{habitId},
                         null,
                         null,
