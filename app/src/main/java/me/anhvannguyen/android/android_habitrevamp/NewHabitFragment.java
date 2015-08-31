@@ -2,6 +2,7 @@ package me.anhvannguyen.android.android_habitrevamp;
 
 
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import me.anhvannguyen.android.android_habitrevamp.data.HabitContract;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,7 +74,14 @@ public class NewHabitFragment extends Fragment {
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (inputHasError() == false) {
+                    ContentValues values = new ContentValues();
+                    values.put(HabitContract.HabitEntry.COLUMN_TITLE, mTitleEditText.getText().toString());
+                    values.put(HabitContract.HabitEntry.COLUMN_START_DATE, mStartDate.getTimeInMillis());
 
+                    getActivity().getContentResolver().insert(HabitContract.HabitEntry.CONTENT_URI, values);
+                    getActivity().finish();
+                }
             }
         });
 
@@ -79,8 +89,25 @@ public class NewHabitFragment extends Fragment {
     }
 
     private void updateDateLabel() {
-        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy - hh:mm:ssa zzzz");
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy - hh:mm:ssa zzz");
         mStartDateTextView.setText(sdf.format(mStartDate.getTime()));
+    }
+
+    /**
+     * Helper method to check if the input fields has any error.
+     * Currently only the title field is required.
+     */
+    private boolean inputHasError() {
+        boolean inputError = false;
+
+        if (mTitleEditText.length() <= 0) {
+            inputError = true;
+            mTitleEditText.setError("Title Required");
+        } else {
+            mTitleEditText.setError(null);
+        }
+
+        return inputError;
     }
 
     private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
