@@ -1,12 +1,14 @@
 package me.anhvannguyen.android.android_habitrevamp;
 
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -52,13 +54,25 @@ public class NewHabitFragment extends Fragment {
         mStartDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                new DatePickerDialog(getActivity(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                mStartDate.set(Calendar.YEAR, year);
+                                mStartDate.set(Calendar.MONTH, monthOfYear);
+                                mStartDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                                updateDateLabel();
+                            }
+                        },
+                        mStartDate.get(Calendar.YEAR),
+                        mStartDate.get(Calendar.MONTH),
+                        mStartDate.get(Calendar.DAY_OF_MONTH))
+                        .show();
             }
         });
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy - hh:mm:ssa zzzz");
         mStartDateTextView = (TextView) rootView.findViewById(R.id.habit_start_date_textview);
-        mStartDateTextView.setText(sdf.format(mStartDate.getTime()));
+        updateDateLabel();
 
         mSaveButton = (Button) rootView.findViewById(R.id.habit_save_button);
         mSaveButton.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +83,11 @@ public class NewHabitFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private void updateDateLabel() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy - hh:mm:ssa zzzz");
+        mStartDateTextView.setText(sdf.format(mStartDate.getTime()));
     }
 
 
