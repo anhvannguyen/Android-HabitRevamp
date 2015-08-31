@@ -54,16 +54,9 @@ public class NewHabitFragment extends Fragment {
         mStartDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(getActivity(),
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                mStartDate.set(Calendar.YEAR, year);
-                                mStartDate.set(Calendar.MONTH, monthOfYear);
-                                mStartDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                                updateDateLabel();
-                            }
-                        },
+                new DatePickerDialog(
+                        getActivity(),
+                        dateSetListener,
                         mStartDate.get(Calendar.YEAR),
                         mStartDate.get(Calendar.MONTH),
                         mStartDate.get(Calendar.DAY_OF_MONTH))
@@ -90,5 +83,13 @@ public class NewHabitFragment extends Fragment {
         mStartDateTextView.setText(sdf.format(mStartDate.getTime()));
     }
 
-
+    private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            mStartDate.set(Calendar.YEAR, year);
+            mStartDate.set(Calendar.MONTH, monthOfYear);
+            mStartDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateDateLabel();
+        }
+    };
 }
