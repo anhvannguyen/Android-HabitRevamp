@@ -16,13 +16,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/habit_title_textview"
+            android:id="@+id/habit_list_title_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Title"/>
 
         <TextView
-            android:id="@+id/habit_subtitle_textview"
+            android:id="@+id/habit_list_subtitle_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Subtitle"/>
@@ -37,13 +37,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/habit_days_complete_textview"
+            android:id="@+id/habit_list_days_complete_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Completed: 2/35"/>
 
         <TextView
-            android:id="@+id/habit_start_date_textview"
+            android:id="@+id/habit_list_start_date_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Start Date: 01/01/2015"/>
