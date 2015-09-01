@@ -19,8 +19,13 @@ import me.anhvannguyen.android.android_habitrevamp.data.HabitContract;
 public class HabitRecyclerAdapter extends RecyclerView.Adapter<HabitRecyclerAdapter.ViewHolder> {
     private Cursor mCursor;
     private Context mContext;
+    public HabitAdapterOnClickHandler mClickHandler;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static interface HabitAdapterOnClickHandler {
+        void onClick(ViewHolder viewHolder);
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mTitleTextView;
         public TextView mSubtitleTextView;
         public TextView mDaysCompleteTextView;
@@ -33,11 +38,20 @@ public class HabitRecyclerAdapter extends RecyclerView.Adapter<HabitRecyclerAdap
             mSubtitleTextView = (TextView) itemView.findViewById(R.id.habit_list_subtitle_textview);
             mDaysCompleteTextView = (TextView) itemView.findViewById(R.id.habit_list_days_complete_textview);
             mStartDateTextView = (TextView) itemView.findViewById(R.id.habit_list_start_date_textview);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            mCursor.moveToPosition(position);
+            mClickHandler.onClick(this);
         }
     }
 
-    public HabitRecyclerAdapter(Context context) {
+    public HabitRecyclerAdapter(Context context, HabitAdapterOnClickHandler clickHandler) {
         mContext = context;
+        mClickHandler = clickHandler;
     }
 
     @Override
