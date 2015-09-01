@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -44,7 +45,13 @@ public class HabitListFragment extends Fragment implements LoaderManager.LoaderC
 
         mCoordinatorLayout = (CoordinatorLayout) rootView.findViewById(R.id.coordinator_layout);
 
-        mHabitRecyclerAdapter = new HabitRecyclerAdapter(getActivity());
+        mHabitRecyclerAdapter = new HabitRecyclerAdapter(getActivity(),
+                new HabitRecyclerAdapter.HabitAdapterOnClickHandler() {
+                    @Override
+                    public void onClick(HabitRecyclerAdapter.ViewHolder viewHolder) {
+                        Snackbar.make(mCoordinatorLayout, "Position " + viewHolder.getAdapterPosition() + " Clicked", Snackbar.LENGTH_SHORT).show();
+                    }
+                });
 
         mHabitListRecyclerView = (RecyclerView) rootView.findViewById(R.id.main_habit_recyclerview);
         mHabitListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
