@@ -75,6 +75,7 @@ public class NewHabitFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (inputHasError() == false) {
+                    // TODO: move off of main thread
                     ContentValues values = new ContentValues();
                     values.put(HabitContract.HabitEntry.COLUMN_TITLE, mTitleEditText.getText().toString());
                     values.put(HabitContract.HabitEntry.COLUMN_START_DATE, mStartDate.getTimeInMillis());
