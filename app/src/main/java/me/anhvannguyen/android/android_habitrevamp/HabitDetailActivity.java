@@ -12,11 +12,17 @@ public class HabitDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_detail);
 
-        HabitDetailFragment fragment = new HabitDetailFragment();
+        if (savedInstanceState == null) {
+            Bundle arguments = new Bundle();
+            arguments.putParcelable(HabitDetailFragment.HABIT_DETAIL_URI, getIntent().getData());
 
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.habit_detail_container, fragment)
-                .commit();
+            HabitDetailFragment fragment = new HabitDetailFragment();
+            fragment.setArguments(arguments);
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.habit_detail_container, fragment)
+                    .commit();
+        }
     }
 
     @Override
