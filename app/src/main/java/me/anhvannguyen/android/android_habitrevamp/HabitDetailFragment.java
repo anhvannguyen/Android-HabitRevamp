@@ -12,6 +12,7 @@ import android.view.ViewGroup;
  * A simple {@link Fragment} subclass.
  */
 public class HabitDetailFragment extends Fragment {
+    public static final String HABIT_DETAIL_URI = "HABIT_DETAIL_URI";
 
 
     public HabitDetailFragment() {
