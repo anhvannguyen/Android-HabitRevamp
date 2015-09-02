@@ -19,9 +19,11 @@
             android:id="@+id/add_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_margin="16dp"
             android:src="@drawable/ic_action_add"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            app:borderWidth="0dp"
             app:fabSize="normal"
             app:layout_anchor="@id/coordinator_layout"
             app:layout_anchorGravity="bottom|right|end"/>
