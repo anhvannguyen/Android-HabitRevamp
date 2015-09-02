@@ -3,6 +3,7 @@ package me.anhvannguyen.android.android_habitrevamp;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -49,7 +50,11 @@ public class HabitListFragment extends Fragment implements LoaderManager.LoaderC
                     @Override
                     public void onClick(HabitRecyclerAdapter.ViewHolder viewHolder) {
                         //Snackbar.make(mCoordinatorLayout, "Position " + viewHolder.getAdapterPosition() + " Clicked", Snackbar.LENGTH_SHORT).show();
+                        int idIndex = mHabitRecyclerAdapter.getCursor().getColumnIndex(HabitContract.HabitEntry._ID);
+                        long habitId = mHabitRecyclerAdapter.getCursor().getLong(idIndex);
+                        Uri habitUri = HabitContract.HabitEntry.buildHabitUri(habitId);
                         Intent intent = new Intent(getActivity(), HabitDetailActivity.class);
+                        intent.setData(habitUri);
                         startActivity(intent);
                     }
                 });
