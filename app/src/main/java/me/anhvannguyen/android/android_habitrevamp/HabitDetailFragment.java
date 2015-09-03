@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 
 /**
@@ -35,8 +34,7 @@ public class HabitDetailFragment extends Fragment {
             mUri = arguments.getParcelable(HABIT_DETAIL_URI);
         }
 
-        TextView textView = (TextView) rootView.findViewById(R.id.detail_uri_textview);
-        textView.setText(mUri.toString());
+
 
         return rootView;
     }
