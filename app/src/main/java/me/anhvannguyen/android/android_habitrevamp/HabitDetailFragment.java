@@ -26,8 +26,10 @@ public class HabitDetailFragment extends Fragment implements LoaderManager.Loade
     public static final String HABIT_DETAIL_URI = "HABIT_DETAIL_URI";
 
     private static final int HABIT_DETAIL_LOADER = 0;
+    private static final int HABIT_DAY_LOADER = 1;
 
     private Uri mUri;
+    private long mId;
 
     private TextView mTitleTextView;
     private TextView mStartDateTextView;
@@ -46,6 +48,7 @@ public class HabitDetailFragment extends Fragment implements LoaderManager.Loade
         Bundle arguments = getArguments();
         if (arguments != null) {
             mUri = arguments.getParcelable(HABIT_DETAIL_URI);
+            mId = Long.valueOf(HabitContract.HabitEntry.getHabitId(mUri));
         }
 
         mTitleTextView = (TextView) rootView.findViewById(R.id.habit_detail_title_textview);
@@ -58,20 +61,35 @@ public class HabitDetailFragment extends Fragment implements LoaderManager.Loade
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         getLoaderManager().initLoader(HABIT_DETAIL_LOADER, null, this);
+        getLoaderManager().initLoader(HABIT_DAY_LOADER, null, this);
         super.onActivityCreated(savedInstanceState);
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         if (mUri != null) {
-            return new CursorLoader(
-                    getActivity(),
-                    mUri,
-                    null,
-                    null,
-                    null,
-                    null
-            );
+
+            switch (id) {
+                case HABIT_DETAIL_LOADER:
+                    return new CursorLoader(
+                            getActivity(),
+                            mUri,
+                            null,
+                            null,
+                            null,
+                            null
+                    );
+                case HABIT_DAY_LOADER:
+                    return new CursorLoader(
+                            getActivity(),
+                            HabitContract.DayCompleteEntry.buildAllDayUri(mId),
+                            null,
+                            null,
+                            null,
+                            HabitContract.DayCompleteEntry.COLUMN_DATE + " ASC"
+                    );
+            }
+
         }
         return null;
     }
@@ -82,14 +100,18 @@ public class HabitDetailFragment extends Fragment implements LoaderManager.Loade
             return;
         }
 
-        int titleIndex = data.getColumnIndex(HabitContract.HabitEntry.COLUMN_TITLE);
-        String title = data.getString(titleIndex);
-        mTitleTextView.setText(title);
+        if (loader.getId() == HABIT_DETAIL_LOADER) {
+            int titleIndex = data.getColumnIndex(HabitContract.HabitEntry.COLUMN_TITLE);
+            String title = data.getString(titleIndex);
+            mTitleTextView.setText(title);
 
-        int startDateIndex = data.getColumnIndex(HabitContract.HabitEntry.COLUMN_START_DATE);
-        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");
-        long dateValue = data.getLong(startDateIndex);
-        mStartDateTextView.setText(sdf.format(new Date(dateValue)));
+            int startDateIndex = data.getColumnIndex(HabitContract.HabitEntry.COLUMN_START_DATE);
+            SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");
+            long dateValue = data.getLong(startDateIndex);
+            mStartDateTextView.setText(sdf.format(new Date(dateValue)));
+        } else if (loader.getId() == HABIT_DAY_LOADER) {
+            // TODO: Load data when view is created
+        }
 
     }
 
