@@ -74,5 +74,12 @@ public class HabitContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
+        public static Uri buildAllDayUri(long id) {
+            return HabitEntry.buildHabitUri(id).buildUpon()
+                    .appendPath(PATH_ALL_DAYS)
+                    .build();
+
+        }
+
     }
 }
