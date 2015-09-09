@@ -26,9 +26,11 @@ public class NewHabitFragment extends Fragment {
     private EditText mSubtitleEditText;
     private Button mStartDateButton;
     private TextView mStartDateTextView;
+    private TextView mEndDateTextView;
     private Button mSaveButton;
 
     private Calendar mStartDate;
+    private Calendar mEndDate;
 
     public NewHabitFragment() {
         // Required empty public constructor
@@ -49,6 +51,10 @@ public class NewHabitFragment extends Fragment {
         mStartDate.set(Calendar.SECOND, 0);
         mStartDate.set(Calendar.MILLISECOND, 0);
 
+        mEndDate = Calendar.getInstance();
+        mEndDate.setTime(mStartDate.getTime());
+        mEndDate.add(Calendar.DATE, 35);
+
         mTitleEditText = (EditText) rootView.findViewById(R.id.habit_title_edittext);
 
         mSubtitleEditText = (EditText) rootView.findViewById(R.id.habit_subtitle_edittext);
@@ -68,6 +74,7 @@ public class NewHabitFragment extends Fragment {
         });
 
         mStartDateTextView = (TextView) rootView.findViewById(R.id.habit_start_date_textview);
+        mEndDateTextView = (TextView) rootView.findViewById(R.id.habit_end_date_textview);
         updateDateLabel();
 
         mSaveButton = (Button) rootView.findViewById(R.id.habit_save_button);
@@ -92,6 +99,7 @@ public class NewHabitFragment extends Fragment {
     private void updateDateLabel() {
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy - hh:mm:ssa zzz");
         mStartDateTextView.setText(sdf.format(mStartDate.getTime()));
+        mEndDateTextView.setText(sdf.format(mEndDate.getTime()));
     }
 
     /**
@@ -117,6 +125,10 @@ public class NewHabitFragment extends Fragment {
             mStartDate.set(Calendar.YEAR, year);
             mStartDate.set(Calendar.MONTH, monthOfYear);
             mStartDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            mEndDate.setTime(mStartDate.getTime());
+            mEndDate.add(Calendar.DATE, 35);
+
             updateDateLabel();
         }
     };
