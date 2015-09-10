@@ -45,6 +45,78 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"/>
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Everyday of the week"
+        android:checked="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sunday"
+            android:textOff="Sun"
+            android:textOn="Sun"/>
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monday"
+            android:textOff="Mon"
+            android:textOn="Mon"/>
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tuesday"
+            android:textOff="Tues"
+            android:textOn="Tues"/>
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wednesday"
+            android:textOff="Wed"
+            android:textOn="Wed"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thusday"
+            android:textOff="Thur"
+            android:textOn="Thur"/>
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Friday"
+            android:textOff="Fri"
+            android:textOn="Fri"/>
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Saturday"
+            android:textOff="Sat"
+            android:textOn="Sat"/>
+
+        </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
     <Button
         android:id="@+id/habit_save_button"
         android:layout_width="wrap_content"
