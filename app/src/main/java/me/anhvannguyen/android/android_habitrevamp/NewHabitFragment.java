@@ -9,9 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,6 +30,14 @@ public class NewHabitFragment extends Fragment {
     private Button mStartDateButton;
     private TextView mStartDateTextView;
     private TextView mEndDateTextView;
+    private CheckBox mAllDaysCheckbox;
+    private ToggleButton mSundayToggle;
+    private ToggleButton mMondayToggle;
+    private ToggleButton mTuesdayToggle;
+    private ToggleButton mWednesdayToggle;
+    private ToggleButton mThursdayToggle;
+    private ToggleButton mFridayToggle;
+    private ToggleButton mSaturdayToggle;
     private Button mSaveButton;
 
     private Calendar mStartDate;
@@ -77,6 +88,26 @@ public class NewHabitFragment extends Fragment {
         mEndDateTextView = (TextView) rootView.findViewById(R.id.habit_end_date_textview);
         updateDateLabel();
 
+        mAllDaysCheckbox = (CheckBox) rootView.findViewById(R.id.habit_all_days_checkbox);
+
+        mSundayToggle = (ToggleButton) rootView.findViewById(R.id.habit_new_sunday_togglebutton);
+        mMondayToggle = (ToggleButton) rootView.findViewById(R.id.habit_new_monday_togglebutton);
+        mTuesdayToggle = (ToggleButton) rootView.findViewById(R.id.habit_new_tuesday_togglebutton);
+        mWednesdayToggle = (ToggleButton) rootView.findViewById(R.id.habit_new_wednesday_togglebutton);
+        mThursdayToggle = (ToggleButton) rootView.findViewById(R.id.habit_new_thursday_togglebutton);
+        mFridayToggle = (ToggleButton) rootView.findViewById(R.id.habit_new_friday_togglebutton);
+        mSaturdayToggle = (ToggleButton) rootView.findViewById(R.id.habit_new_saturday_togglebutton);
+
+        checkAllDays();
+
+        mAllDaysCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                checkAllDays();
+            }
+        });
+
+
         mSaveButton = (Button) rootView.findViewById(R.id.habit_save_button);
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +148,26 @@ public class NewHabitFragment extends Fragment {
         }
 
         return inputError;
+    }
+
+    private void checkAllDays() {
+        if (mAllDaysCheckbox.isChecked()) {
+            mSundayToggle.setEnabled(false);
+            mMondayToggle.setEnabled(false);
+            mTuesdayToggle.setEnabled(false);
+            mWednesdayToggle.setEnabled(false);
+            mThursdayToggle.setEnabled(false);
+            mFridayToggle.setEnabled(false);
+            mSaturdayToggle.setEnabled(false);
+        } else {
+            mSundayToggle.setEnabled(true);
+            mMondayToggle.setEnabled(true);
+            mTuesdayToggle.setEnabled(true);
+            mWednesdayToggle.setEnabled(true);
+            mThursdayToggle.setEnabled(true);
+            mFridayToggle.setEnabled(true);
+            mSaturdayToggle.setEnabled(true);
+        }
     }
 
     private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
