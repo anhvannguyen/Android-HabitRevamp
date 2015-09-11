@@ -35,6 +35,18 @@ public class HabitContract {
         // date of when the user want to start
         public static final String COLUMN_START_DATE = "start_date";
 
+        // date of when the habit tracker stops (currently 35 days from start)
+        public static final String COLUMN_END_DATE = "end_date";
+
+        // day of week where the habit is active
+        public static final String COLUMN_ACTIVE_SUNDAY = "active_sunday";
+        public static final String COLUMN_ACTIVE_MONDAY = "active_monday";
+        public static final String COLUMN_ACTIVE_TUESDAY = "active_tuesday";
+        public static final String COLUMN_ACTIVE_WEDNESDAY = "active_wednesday";
+        public static final String COLUMN_ACTIVE_THURSDAY = "active_thursday";
+        public static final String COLUMN_ACTIVE_FRIDAY = "active_friday";
+        public static final String COLUMN_ACTIVE_SATURDAY = "active_saturday";
+
         // content://me.anhvannguyen.android.android_habitrevamp/habit/{id}
         public static String getHabitId(Uri uri) {
             return uri.getPathSegments().get(1);
