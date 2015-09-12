@@ -117,6 +117,7 @@ public class NewHabitFragment extends Fragment {
                     ContentValues values = new ContentValues();
                     values.put(HabitContract.HabitEntry.COLUMN_TITLE, mTitleEditText.getText().toString());
                     values.put(HabitContract.HabitEntry.COLUMN_START_DATE, mStartDate.getTimeInMillis());
+                    values.put(HabitContract.HabitEntry.COLUMN_END_DATE, mEndDate.getTimeInMillis());
 
                     getActivity().getContentResolver().insert(HabitContract.HabitEntry.CONTENT_URI, values);
                     getActivity().finish();
