@@ -21,7 +21,15 @@ public class HabitDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_HABIT_TABLE = "CREATE TABLE " + HabitContract.HabitEntry.TABLE_NAME + " (" +
                 HabitContract.HabitEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 HabitContract.HabitEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
-                HabitContract.HabitEntry.COLUMN_START_DATE + " INTEGER " +
+                HabitContract.HabitEntry.COLUMN_START_DATE + " INTEGER, " +
+                HabitContract.HabitEntry.COLUMN_END_DATE + " INTEGER, " +
+                HabitContract.HabitEntry.COLUMN_ACTIVE_SUNDAY + " INTEGER, " +
+                HabitContract.HabitEntry.COLUMN_ACTIVE_MONDAY + " INTEGER, " +
+                HabitContract.HabitEntry.COLUMN_ACTIVE_TUESDAY + " INTEGER, " +
+                HabitContract.HabitEntry.COLUMN_ACTIVE_WEDNESDAY + " INTEGER, " +
+                HabitContract.HabitEntry.COLUMN_ACTIVE_THURSDAY + " INTEGER, " +
+                HabitContract.HabitEntry.COLUMN_ACTIVE_FRIDAY + " INTEGER, " +
+                HabitContract.HabitEntry.COLUMN_ACTIVE_SATURDAY + " INTEGER " +
                 ");";
 
         final String SQL_CREATE_HABIT_COMPLETED_TABLE = "CREATE TABLE " + HabitContract.DayCompleteEntry.TABLE_NAME + " (" +
