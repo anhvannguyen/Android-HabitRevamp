@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ import me.anhvannguyen.android.android_habitrevamp.data.HabitContract;
  * A simple {@link Fragment} subclass.
  */
 public class NewHabitFragment extends Fragment {
+    private static final String LOG_TAG = NewHabitFragment.class.getSimpleName();
+
     private EditText mTitleEditText;
     private EditText mSubtitleEditText;
     private Button mStartDateButton;
@@ -118,6 +121,9 @@ public class NewHabitFragment extends Fragment {
                     values.put(HabitContract.HabitEntry.COLUMN_TITLE, mTitleEditText.getText().toString());
                     values.put(HabitContract.HabitEntry.COLUMN_START_DATE, mStartDate.getTimeInMillis());
                     values.put(HabitContract.HabitEntry.COLUMN_END_DATE, mEndDate.getTimeInMillis());
+
+                    Log.d(LOG_TAG, "Start Date: " + mStartDate.getTimeInMillis());
+                    Log.d(LOG_TAG, "End Date: " + mEndDate.getTimeInMillis());
 
                     getActivity().getContentResolver().insert(HabitContract.HabitEntry.CONTENT_URI, values);
                     getActivity().finish();
