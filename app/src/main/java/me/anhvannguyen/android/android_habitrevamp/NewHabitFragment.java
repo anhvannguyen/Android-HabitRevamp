@@ -27,6 +27,9 @@ import me.anhvannguyen.android.android_habitrevamp.data.HabitContract;
 public class NewHabitFragment extends Fragment {
     private static final String LOG_TAG = NewHabitFragment.class.getSimpleName();
 
+    public static final int DAY_INACTIVE = 0;
+    public static final int DAY_ACTIVE = 1;
+
     private EditText mTitleEditText;
     private EditText mSubtitleEditText;
     private Button mStartDateButton;
@@ -170,11 +173,33 @@ public class NewHabitFragment extends Fragment {
         }
     }
 
+    private int checkDayOfWeek(ToggleButton toggleButton) {
+        return toggleButton.isChecked() ? DAY_ACTIVE : DAY_INACTIVE;
+    }
+
     private ContentValues generateContentValues() {
         ContentValues values = new ContentValues();
         values.put(HabitContract.HabitEntry.COLUMN_TITLE, mTitleEditText.getText().toString());
         values.put(HabitContract.HabitEntry.COLUMN_START_DATE, mStartDate.getTimeInMillis());
         values.put(HabitContract.HabitEntry.COLUMN_END_DATE, mEndDate.getTimeInMillis());
+        // Mark all days of the week active if the checkbox is checked
+        if (mAllDaysCheckbox.isChecked()) {
+            values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_SUNDAY, DAY_ACTIVE);
+            values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_MONDAY, DAY_ACTIVE);
+            values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_TUESDAY, DAY_ACTIVE);
+            values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_WEDNESDAY, DAY_ACTIVE);
+            values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_THURSDAY, DAY_ACTIVE);
+            values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_FRIDAY, DAY_ACTIVE);
+            values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_SATURDAY, DAY_ACTIVE);
+        } else {
+            values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_SUNDAY, checkDayOfWeek(mSundayToggle));
+            values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_MONDAY, checkDayOfWeek(mMondayToggle));
+            values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_TUESDAY, checkDayOfWeek(mTuesdayToggle));
+            values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_WEDNESDAY, checkDayOfWeek(mWednesdayToggle));
+            values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_THURSDAY, checkDayOfWeek(mThursdayToggle));
+            values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_FRIDAY, checkDayOfWeek(mFridayToggle));
+            values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_SATURDAY, checkDayOfWeek(mSaturdayToggle));
+        }
 
         return values;
     }
