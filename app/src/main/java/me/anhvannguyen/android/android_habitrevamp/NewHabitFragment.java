@@ -5,7 +5,6 @@ import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,13 +116,7 @@ public class NewHabitFragment extends Fragment {
             public void onClick(View v) {
                 if (inputHasError() == false) {
                     // TODO: move off of main thread
-                    ContentValues values = new ContentValues();
-                    values.put(HabitContract.HabitEntry.COLUMN_TITLE, mTitleEditText.getText().toString());
-                    values.put(HabitContract.HabitEntry.COLUMN_START_DATE, mStartDate.getTimeInMillis());
-                    values.put(HabitContract.HabitEntry.COLUMN_END_DATE, mEndDate.getTimeInMillis());
-
-                    Log.d(LOG_TAG, "Start Date: " + mStartDate.getTimeInMillis());
-                    Log.d(LOG_TAG, "End Date: " + mEndDate.getTimeInMillis());
+                    ContentValues values = generateContentValues();
 
                     getActivity().getContentResolver().insert(HabitContract.HabitEntry.CONTENT_URI, values);
                     getActivity().finish();
@@ -175,6 +168,15 @@ public class NewHabitFragment extends Fragment {
             mFridayToggle.setEnabled(true);
             mSaturdayToggle.setEnabled(true);
         }
+    }
+
+    private ContentValues generateContentValues() {
+        ContentValues values = new ContentValues();
+        values.put(HabitContract.HabitEntry.COLUMN_TITLE, mTitleEditText.getText().toString());
+        values.put(HabitContract.HabitEntry.COLUMN_START_DATE, mStartDate.getTimeInMillis());
+        values.put(HabitContract.HabitEntry.COLUMN_END_DATE, mEndDate.getTimeInMillis());
+
+        return values;
     }
 
     private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
