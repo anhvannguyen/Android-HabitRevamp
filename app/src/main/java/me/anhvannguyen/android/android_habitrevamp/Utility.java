@@ -18,6 +18,13 @@ public class Utility {
         values.put(HabitContract.HabitEntry.COLUMN_TITLE, "Exercise");
         values.put(HabitContract.HabitEntry.COLUMN_START_DATE, START_DATE_2015_10_01);
         values.put(HabitContract.HabitEntry.COLUMN_END_DATE, END_DATE_2015_11_05);
+        values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_SUNDAY, NewHabitFragment.DAY_ACTIVE);
+        values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_MONDAY, NewHabitFragment.DAY_ACTIVE);
+        values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_TUESDAY, NewHabitFragment.DAY_ACTIVE);
+        values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_WEDNESDAY, NewHabitFragment.DAY_ACTIVE);
+        values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_THURSDAY, NewHabitFragment.DAY_ACTIVE);
+        values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_FRIDAY, NewHabitFragment.DAY_ACTIVE);
+        values.put(HabitContract.HabitEntry.COLUMN_ACTIVE_SATURDAY, NewHabitFragment.DAY_ACTIVE);
 
         return values;
     }
