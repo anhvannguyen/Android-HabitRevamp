@@ -197,9 +197,10 @@ public class HabitContentProvider extends ContentProvider {
                 String habitId = HabitContract.HabitEntry.getHabitId(uri);
                 rowsDeleted = db.delete(
                         HabitContract.HabitEntry.TABLE_NAME,
-                        HabitContract.HabitEntry._ID,
+                        HabitContract.HabitEntry._ID + " = ?",
                         new String[]{habitId}
                 );
+                break;
             case DATE:
                 rowsDeleted = db.delete(
                         HabitContract.DayCompleteEntry.TABLE_NAME,
