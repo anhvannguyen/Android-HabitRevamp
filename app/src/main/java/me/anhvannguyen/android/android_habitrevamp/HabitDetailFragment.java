@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -139,7 +138,17 @@ public class HabitDetailFragment extends Fragment implements LoaderManager.Loade
 
         switch (id) {
             case R.id.action_delete_item:
-                Toast.makeText(getActivity(), "Delete pressed", Toast.LENGTH_SHORT).show();
+//                getActivity().getContentResolver().delete(
+//                        HabitContract.DayCompleteEntry.CONTENT_URI,
+//                        HabitContract.DayCompleteEntry.COLUMN_HABIT_ID + " = ?",
+//                        new String[]{String.valueOf(mId)}
+//                );
+                getActivity().getContentResolver().delete(
+                        mUri,
+                        null,
+                        null
+                );
+                getActivity().finish();
                 return true;
             case R.id.action_settings:
                 return true;
