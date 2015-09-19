@@ -138,11 +138,11 @@ public class HabitDetailFragment extends Fragment implements LoaderManager.Loade
 
         switch (id) {
             case R.id.action_delete_item:
-//                getActivity().getContentResolver().delete(
-//                        HabitContract.DayCompleteEntry.CONTENT_URI,
-//                        HabitContract.DayCompleteEntry.COLUMN_HABIT_ID + " = ?",
-//                        new String[]{String.valueOf(mId)}
-//                );
+                getActivity().getContentResolver().delete(
+                        HabitContract.DayCompleteEntry.CONTENT_URI,
+                        HabitContract.DayCompleteEntry.COLUMN_HABIT_ID + " = ?",
+                        new String[]{String.valueOf(mId)}
+                );
                 getActivity().getContentResolver().delete(
                         mUri,
                         null,
