@@ -3,8 +3,12 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="me.anhvannguyen.android.android_habitrevamp.HabitDetailActivity">
     <item
+        android:id="@+id/action_edit"
+        android:title="@string/action_edit"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/action_delete_item"
-        android:title="Delete"
+        android:title="@string/action_delete_item"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_settings"
