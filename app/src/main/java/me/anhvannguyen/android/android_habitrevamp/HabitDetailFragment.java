@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -137,6 +138,9 @@ public class HabitDetailFragment extends Fragment implements LoaderManager.Loade
         int id = item.getItemId();
 
         switch (id) {
+            case R.id.action_edit:
+                Toast.makeText(getActivity(), "Editor not enable yet", Toast.LENGTH_SHORT).show();
+                return true;
             case R.id.action_delete_item:
                 getActivity().getContentResolver().delete(
                         HabitContract.DayCompleteEntry.CONTENT_URI,
