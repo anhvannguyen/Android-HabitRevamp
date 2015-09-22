@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
 /**
@@ -20,6 +21,20 @@ public class HabitContentProvider extends ContentProvider {
     private static final int DATE = 200;
     private static final int DATE_WITH_ID = 201;
     private static final int DATE_WITH_HABIT_ID = 202;
+
+    private static final SQLiteQueryBuilder sDailyHabitQueryBuilder;
+
+    static {
+        sDailyHabitQueryBuilder = new SQLiteQueryBuilder();
+
+        // inner join the tables on HabitEntry._id = DayCompleteEntry.habit_id
+        sDailyHabitQueryBuilder.setTables(HabitContract.HabitEntry.TABLE_NAME + " INNER JOIN " +
+                HabitContract.DayCompleteEntry.TABLE_NAME + " ON " +
+                HabitContract.HabitEntry.TABLE_NAME + "." +
+                HabitContract.HabitEntry._ID + " = " +
+                HabitContract.DayCompleteEntry.TABLE_NAME + "." +
+                HabitContract.DayCompleteEntry.COLUMN_HABIT_ID);
+    }
 
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
