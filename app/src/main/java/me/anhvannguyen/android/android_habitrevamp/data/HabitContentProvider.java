@@ -84,6 +84,7 @@ public class HabitContentProvider extends ContentProvider {
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
 
         switch (match) {
+            // "/habit"
             case HABIT: {
                 returnCursor = db.query(
                         HabitContract.HabitEntry.TABLE_NAME,
@@ -96,6 +97,7 @@ public class HabitContentProvider extends ContentProvider {
                 );
                 break;
             }
+            // "/habit/#"
             case HABIT_WITH_ID: {
                 String habitId = HabitContract.HabitEntry.getHabitId(uri);
                 returnCursor = db.query(
@@ -109,6 +111,7 @@ public class HabitContentProvider extends ContentProvider {
                 );
                 break;
             }
+            // "/day"
             case DATE: {
                 returnCursor = db.query(
                         HabitContract.DayCompleteEntry.TABLE_NAME,
@@ -121,6 +124,7 @@ public class HabitContentProvider extends ContentProvider {
                 );
                 break;
             }
+            // "/day/#"
             case DATE_WITH_ID: {
                 String habitDayId = HabitContract.DayCompleteEntry.getHabitDateId(uri);
                 returnCursor = db.query(
@@ -134,13 +138,23 @@ public class HabitContentProvider extends ContentProvider {
                 );
                 break;
             }
+            // "/habit/#/alldays"
             case DATE_WITH_HABIT_ID: {
                 String habitId = HabitContract.HabitEntry.getHabitId(uri);
-                returnCursor = db.query(
-                        HabitContract.DayCompleteEntry.TABLE_NAME,
+//                returnCursor = db.query(
+//                        HabitContract.DayCompleteEntry.TABLE_NAME,
+//                        projection,
+//                        HabitContract.DayCompleteEntry.COLUMN_HABIT_ID + " = ?",
+//                        new String[]{habitId},
+//                        null,
+//                        null,
+//                        sortOrder
+//                );
+                returnCursor = sDailyHabitQueryBuilder.query(
+                        db,
                         projection,
-                        HabitContract.DayCompleteEntry.COLUMN_HABIT_ID + " = ?",
-                        new String[]{habitId},
+                        selection,
+                        selectionArgs,
                         null,
                         null,
                         sortOrder
