@@ -153,8 +153,8 @@ public class HabitContentProvider extends ContentProvider {
                 returnCursor = sDailyHabitQueryBuilder.query(
                         db,
                         projection,
-                        selection,
-                        selectionArgs,
+                        HabitContract.DayCompleteEntry.COLUMN_HABIT_ID + " = ?",
+                        new String[]{habitId},
                         null,
                         null,
                         sortOrder
